@@ -18,6 +18,10 @@ class User {
       street: this.street,
     });
   }
+
+  hasMatchingPassword(hashedPw) {
+    return bcrypt.compare(this.pw, hashedPw);
+  }
 }
 
 module.exports = User;

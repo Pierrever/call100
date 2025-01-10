@@ -3,6 +3,9 @@ const csurf = require("csurf");
 const path = require("path");
 const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
+const prodsRoutes = require("./routes/products.routes");
+const baseRoutes = require("./routes/base.routes");
+
 const db = require("./data/database");
 const addCsrfTokenMw = require("./middlewares/csrf-token");
 const errorHandleMw = require("./middlewares/error-handler");
@@ -20,7 +23,9 @@ const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
 app.use(csurf());
 app.use(addCsrfTokenMw);
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(prodsRoutes);
 
 app.use(errorHandleMw);
 
