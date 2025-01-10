@@ -5,6 +5,7 @@ const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
 const prodsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
+const checkAuthStatusMw = require("./middlewares/check-auth");
 
 const db = require("./data/database");
 const addCsrfTokenMw = require("./middlewares/csrf-token");
@@ -23,6 +24,7 @@ const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
 app.use(csurf());
 app.use(addCsrfTokenMw);
+app.use(checkAuthStatusMw);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(prodsRoutes);
