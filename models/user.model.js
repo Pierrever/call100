@@ -22,6 +22,10 @@ class User {
   hasMatchingPassword(hashedPw) {
     return bcrypt.compare(this.pw, hashedPw);
   }
+
+  getUserWithSameEmail() {
+    return db.getDb().collection("users").findOne({ email: this.email });
+  }
 }
 
 module.exports = User;
