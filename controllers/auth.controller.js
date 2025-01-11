@@ -1,30 +1,46 @@
 const User = require("../models/user.model");
 const authUtil = require("../util/authentication");
 const validation = require("../util/validation");
+const sessionFlash = require("../util/session-flash");
 
 function getSignup(req, res) {
-  res.render("customer/auth/signup");
+  let sessionData = sessionFlash.getSession(req);
+
+  if (!sessionData) {
+    sessionData = { email: "", pw: "" };
+  }
+  res.render("customer/auth/signup", { inputData: sessionData });
 }
 
 async function signup(req, res, next) {
-  const user = new User(
-    req.body.email,
-    req.body.pw,
-    req.body.fullname,
-    req.body.street
-  );
+  const enteredData = {
+    email: req.body.email,
+    pw: req.body.pw,
+    name: req.body.fullname,
+    street: req.body.street,
+  };
+  const user = new User(enteredData);
   if (
-    !validation.uCrValid(req.body.email, req.body.pw, req.body.fullname) ||
+    !validation.uDetailsValid(req.body.email, req.body.pw, req.body.fullname) ||
     !validation.emailConfirmed(req.body.email, req.body.cfemail)
   ) {
-    res.redirect("/signup");
+    sessionFlash.flashDataToSession(
+      req,
+      { errorMessage: "Check your input", ...enteredData },
+      () => res.redirect("/signup")
+    );
+
     return;
   }
 
   try {
     const eA = await user.existsAlready();
     if (eA) {
-      res.redirect("/signup");
+      sessionFlash.flashDataToSession(
+        req,
+        { errorMessage: "User exists already", ...enteredData },
+        () => res.redirect("/signup")
+      );
       return;
     }
 
@@ -37,7 +53,12 @@ async function signup(req, res, next) {
 }
 
 function getLogin(req, res) {
-  res.render("customer/auth/login");
+  let sessionData = sessionFlash.getSession(req);
+  if (!sessionData) {
+    sessionData = { email: "", pw: "" };
+  }
+
+  res.render("customer/auth/login", { inputData: sessionData });
 }
 
 function logout(req, res) {
@@ -55,14 +76,26 @@ async function login(req, res) {
     return;
   }
 
+  const sessionEData = {
+    message: "User doesn't exist",
+    email: user.email,
+    pw: user.pw,
+  };
+
   if (!existingUser) {
-    res.redirect("/login");
+    sessionFlash.flashDataToSession(req, sessionEData, () =>
+      res.redirect("/login")
+    );
+
     return;
   }
   const passwordIsCorrect = await user.hasMatchingPassword(existingUser.pw);
 
   if (!passwordIsCorrect) {
-    res.redirect("/login");
+    sessionFlash.flashDataToSession(req, sessionEData, () =>
+      res.redirect("/login")
+    );
+
     return;
   }
 
