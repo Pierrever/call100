@@ -26,6 +26,10 @@ class User {
   getUserWithSameEmail() {
     return db.getDb().collection("users").findOne({ email: this.email });
   }
+
+  async existsAlready() {
+    return await this.getUserWithSameEmail();
+  }
 }
 
 module.exports = User;
