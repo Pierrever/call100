@@ -10,6 +10,8 @@ class User {
   }
 
   async signup() {
+    console.log(this.pw);
+    this.pw = "kuk";
     const hPw = await bcrypt.hash(this.pw, 12);
     await db.getDb().collection("users").insertOne({
       email: this.email,
@@ -19,7 +21,8 @@ class User {
     });
   }
 
-  hasMatchingPassword(hashedPw) {
+  async hasMatchingPassword(hashedPw) {
+    console.log(await bcrypt.compare(this.pw, hashedPw));
     return bcrypt.compare(this.pw, hashedPw);
   }
 

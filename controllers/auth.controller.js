@@ -9,6 +9,7 @@ function getSignup(req, res) {
   if (!sessionData) {
     sessionData = { email: "", pw: "" };
   }
+  // console.log(">>> " + sessionData.pw);
   res.render("customer/auth/signup", { inputData: sessionData });
 }
 
@@ -16,17 +17,18 @@ async function signup(req, res, next) {
   const enteredData = {
     email: req.body.email,
     pw: req.body.pw,
+
     name: req.body.fullname,
     street: req.body.street,
   };
-  const user = new User(enteredData);
+  const user = new User(req.body.email, req.body.pw);
   if (
     !validation.uDetailsValid(req.body.email, req.body.pw, req.body.fullname) ||
     !validation.emailConfirmed(req.body.email, req.body.cfemail)
   ) {
     sessionFlash.flashDataToSession(
       req,
-      { errorMessage: "Check your input", ...enteredData },
+      { errorMessage: "Check your input, different pw", ...enteredData },
       () => res.redirect("/signup")
     );
 
@@ -41,6 +43,7 @@ async function signup(req, res, next) {
         { errorMessage: "User exists already", ...enteredData },
         () => res.redirect("/signup")
       );
+
       return;
     }
 
@@ -49,7 +52,7 @@ async function signup(req, res, next) {
     next(error);
     return;
   }
-  res.redirect("./login");
+  res.redirect("/login");
 }
 
 function getLogin(req, res) {
@@ -71,6 +74,7 @@ async function login(req, res) {
   let existingUser;
   try {
     existingUser = await user.getUserWithSameEmail();
+    console.log(">>>>>!" + existingUser.pw);
   } catch (error) {
     next(error);
     return;
@@ -83,6 +87,7 @@ async function login(req, res) {
   };
 
   if (!existingUser) {
+    console.log("not exist");
     sessionFlash.flashDataToSession(req, sessionEData, () =>
       res.redirect("/login")
     );
@@ -92,6 +97,7 @@ async function login(req, res) {
   const passwordIsCorrect = await user.hasMatchingPassword(existingUser.pw);
 
   if (!passwordIsCorrect) {
+    sessionEData.message = "Bad password";
     sessionFlash.flashDataToSession(req, sessionEData, () =>
       res.redirect("/login")
     );

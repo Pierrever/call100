@@ -6,6 +6,11 @@
 <body>
 <%-include('../../shared/includes/header') %>
 <main> <h1>Login</h1>
+    <% if (inputData.message) { %>
+        <section class="alert"><h2>Bad credentials</h2>
+        <p><%= inputData.message %></p></section>
+
+    <% } %>   
 <form action="/login" method="POST">
     <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>"> 
     <p class="sixfour">

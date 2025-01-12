@@ -6,9 +6,9 @@
 <body>
 <%-include('../../shared/includes/header') %>
 <main> <h1 class="sixfour">Create new account</h1>
-    <% if (inputData.message) { %>
+    <% if (inputData.errorMessage) { %>
         <section class="alert"><h2>Invalid input</h2>
-        <p><%= inputData.message %></p></section>
+        <p><%= inputData.errorMessage %></p></section>
 
     <% } %>   
 <form action="/signup" method="POST">
