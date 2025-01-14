@@ -7,7 +7,7 @@ function getSignup(req, res) {
   let sessionData = sessionFlash.getSession(req);
 
   if (!sessionData) {
-    sessionData = { email: "", pw: "" };
+    sessionData = { email: "", pw: "", street: "", name: "" };
   }
   // console.log(">>> " + sessionData.pw);
   res.render("customer/auth/signup", { inputData: sessionData });
@@ -21,7 +21,13 @@ async function signup(req, res, next) {
     name: req.body.fullname,
     street: req.body.street,
   };
-  const user = new User(req.body.email, req.body.pw);
+  console.log(req.body.street);
+  const user = new User(
+    req.body.email,
+    req.body.pw,
+    req.body.street,
+    req.body.fullname
+  );
   if (
     !validation.uDetailsValid(req.body.email, req.body.pw, req.body.fullname) ||
     !validation.emailConfirmed(req.body.email, req.body.cfemail)
