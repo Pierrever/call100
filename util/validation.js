@@ -10,6 +10,7 @@ function uDetailsValid(email, pw, name) {
 }
 
 function emailConfirmed(email, cfEmail) {
+  console.log("ddd> " + cfEmail === email);
   return cfEmail === email;
 }
 

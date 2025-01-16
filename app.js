@@ -4,6 +4,7 @@ const path = require("path");
 const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
 const prodsRoutes = require("./routes/products.routes");
+const adminRoutes = require("./routes/admin.routes");
 const baseRoutes = require("./routes/base.routes");
 const checkAuthStatusMw = require("./middlewares/check-auth");
 
@@ -28,7 +29,7 @@ app.use(checkAuthStatusMw);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(prodsRoutes);
-
+app.use(adminRoutes);
 app.use(errorHandleMw);
 
 db.connectToDatabase()

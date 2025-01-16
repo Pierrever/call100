@@ -28,10 +28,12 @@ async function signup(req, res, next) {
     req.body.street,
     req.body.fullname
   );
+  console.log(`${req.body.email}---${req.body.cfemail}`);
   if (
     !validation.uDetailsValid(req.body.email, req.body.pw, req.body.fullname) ||
     !validation.emailConfirmed(req.body.email, req.body.cfemail)
   ) {
+    console.log(`${req.body.email}---${req.body.cfemail}`);
     sessionFlash.flashDataToSession(
       req,
       { errorMessage: "Check your input, different pw", ...enteredData },
@@ -76,11 +78,12 @@ function logout(req, res) {
 }
 
 async function login(req, res) {
+  console.log(`___ ${req.body.email} ${req.body.pw}`);
   const user = new User(req.body.email, req.body.pw);
   let existingUser;
+  console.log("dlfjdalfkjdaslkjfdas");
   try {
     existingUser = await user.getUserWithSameEmail();
-    console.log(">>>>>!" + existingUser.pw);
   } catch (error) {
     next(error);
     return;
@@ -100,6 +103,7 @@ async function login(req, res) {
 
     return;
   }
+  console.log("nnn" + existingUser.pw);
   const passwordIsCorrect = await user.hasMatchingPassword(existingUser.pw);
 
   if (!passwordIsCorrect) {
@@ -110,6 +114,8 @@ async function login(req, res) {
 
     return;
   }
+
+  console.log("hello " + existingUser.email);
 
   authUtil.createUserSession(req, existingUser, () => {
     res.redirect("/");

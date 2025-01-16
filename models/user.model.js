@@ -11,7 +11,8 @@ class User {
 
   async signup() {
     console.log(this.pw);
-    this.pw = "kuk";
+    // this.pw = "kuk";
+    console.log(await bcrypt.compare(this.pw, await bcrypt.hash(this.pw, 12)));
     const hPw = await bcrypt.hash(this.pw, 12);
     await db.getDb().collection("users").insertOne({
       email: this.email,
@@ -22,8 +23,8 @@ class User {
   }
 
   async hasMatchingPassword(hashedPw) {
-    console.log(await bcrypt.compare(this.pw, hashedPw));
-    return bcrypt.compare(this.pw, hashedPw);
+    console.log("jurik" + this.pw + (await bcrypt.compare(this.pw, hashedPw)));
+    return await bcrypt.compare(this.pw, hashedPw);
   }
 
   getUserWithSameEmail() {
