@@ -29,7 +29,7 @@ app.use(checkAuthStatusMw);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(prodsRoutes);
-app.use(adminRoutes);
+app.use("/admin", adminRoutes);
 app.use(errorHandleMw);
 
 db.connectToDatabase()
