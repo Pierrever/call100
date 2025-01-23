@@ -1,9 +1,7 @@
 const Product = require("../models/product.model");
 
 async function getProducts(req, res, next) {
-  console.log("herehere");
   try {
-    console.log("herehere");
     const products = await Product.findAll();
     res.render("admin/products/all-products", { products: products });
   } catch (error) {

@@ -1,5 +1,6 @@
 <article class="product-item">
-  <img src="<% product.imageurl %>" alt="" />
+  <img src="<%= product.imageurl %>" alt="<%= product.title %>" />
+
   <h2><%= product.title %></h2>
   <div>
     <a class="btn btn-alt" href="/admin/products/<%= product.id %>"
