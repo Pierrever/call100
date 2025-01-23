@@ -9,6 +9,17 @@ class Product {
     this.image = product.image;
     this.imagepath = `product-data/images/${product.image}`;
     this.imageurl = `/products/assets/images/${product.image}`;
+    if (product._id) {
+      this.id = product._id.toString();
+    }
+  }
+
+  static async findAll() {
+    const products = await db.getDb().collection("products").find().toArray();
+    console.log("xuxu " + products);
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
   }
   async save() {
     const productData = {
@@ -18,7 +29,7 @@ class Product {
       description: this.description,
       summary: this.summary,
     };
-    db.getDb().collection("products").insertOne(productData);
+    await db.getDb().collection("products").insertOne(productData);
   }
 }
 
