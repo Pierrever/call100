@@ -26,10 +26,11 @@ app.use(expressSession(sessionConfig));
 app.use(csurf());
 app.use(addCsrfTokenMw);
 app.use(checkAuthStatusMw);
+app.use("/admin", adminRoutes);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(prodsRoutes);
-app.use("/admin", adminRoutes);
+
 app.use(errorHandleMw);
 
 db.connectToDatabase()

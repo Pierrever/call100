@@ -12,7 +12,7 @@
     </section>
     <section>
         <ul>
-            <% for product of products { %>
+            <% for (const product of products) { %>
             <li>
                 <%- include('includes/product-item', {product: product}) %>
             </li>
