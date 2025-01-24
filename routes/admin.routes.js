@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/products", adminController.getProducts);
 router.get("/products/new-product", adminController.getNewProduct);
+router.get("/products/:id", adminController.getUpdateProduct);
+router.post("/products/:id", adminController.updateProduct);
 router.post(
   "/products",
   imageUploadMiddleware,
