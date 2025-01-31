@@ -7,6 +7,7 @@ const prodsRoutes = require("./routes/products.routes");
 const adminRoutes = require("./routes/admin.routes");
 const baseRoutes = require("./routes/base.routes");
 const checkAuthStatusMw = require("./middlewares/check-auth");
+const protectRoutes = require("./middlewares/protect-routes");
 
 const db = require("./data/database");
 const addCsrfTokenMw = require("./middlewares/csrf-token");
@@ -27,10 +28,13 @@ app.use(expressSession(sessionConfig));
 app.use(csurf());
 app.use(addCsrfTokenMw);
 app.use(checkAuthStatusMw);
-app.use("/admin", adminRoutes);
+
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(prodsRoutes);
+
+app.use(protectRoutes);
+app.use("/admin", adminRoutes);
 
 app.use(errorHandleMw);
 
