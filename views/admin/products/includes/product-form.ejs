@@ -1,5 +1,5 @@
 <form
-  action="<%= submitPath %>?_csrf=<%= locals.csrfToken%>"
+  action="<%= submitPath %>?_csrf=<%= locals.csrf %>"
   method="POST"
   enctype="multipart/form-data"
 >
@@ -12,7 +12,7 @@
     <div class="img-preview">
 
     
-    <label for="image">Image</label>
+    <label for="image ">Image</label>
     <input
       type="file"
       id="image"

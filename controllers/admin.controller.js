@@ -40,7 +40,7 @@ async function getUpdateProduct(req, res) {
   }
 }
 
-async function updateProduct(req, res, save) {
+async function updateProduct(req, res, next) {
   const product = new Product({
     ...req.body,
     _id: req.params.id,
@@ -57,10 +57,22 @@ async function updateProduct(req, res, save) {
   res.redirect("/admin/products");
 }
 
+async function deleteProduct(req, res, next) {
+  let product;
+  try {
+    product = await Product.findById(req.params.id);
+    await product.remove();
+  } catch (err) {
+    return next(err);
+  }
+  res.json({ message: "Del product" });
+}
+
 module.exports = {
-  getProducts: getProducts,
-  getNewProduct: getNewProduct,
-  createNewProduct: createNewProduct,
+  getProducts,
+  getNewProduct,
+  createNewProduct,
   getUpdateProduct,
   updateProduct,
+  deleteProduct,
 };
