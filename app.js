@@ -5,6 +5,7 @@ const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
 const prodsRoutes = require("./routes/products.routes");
 const adminRoutes = require("./routes/admin.routes");
+const updateCartPricesMiddleware = require("./middlewares/update-cart-prices");
 const baseRoutes = require("./routes/base.routes");
 const cartRoutes = require("./routes/cart.routes");
 const ordersRoutes = require("./routes/orders.routes");
@@ -31,6 +32,7 @@ const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
 app.use(csurf());
 app.use(cartMiddleware);
+app.use(updateCartPricesMiddleware);
 app.use(addCsrfTokenMw);
 app.use(checkAuthStatusMw);
 
