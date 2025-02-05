@@ -7,6 +7,7 @@ const prodsRoutes = require("./routes/products.routes");
 const adminRoutes = require("./routes/admin.routes");
 const baseRoutes = require("./routes/base.routes");
 const cartRoutes = require("./routes/cart.routes");
+const ordersRoutes = require("./routes/orders.routes");
 const checkAuthStatusMw = require("./middlewares/check-auth");
 const protectRoutes = require("./middlewares/protect-routes");
 const cartMiddleware = require("./middlewares/cart");
@@ -40,6 +41,7 @@ app.use("/cart", cartRoutes);
 
 app.use(protectRoutes);
 app.use("/admin", adminRoutes);
+app.use("/orders", ordersRoutes);
 
 app.use(errorHandleMw);
 
