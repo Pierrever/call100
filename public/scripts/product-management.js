@@ -3,6 +3,8 @@ const deleteProductButtonElements = document.querySelectorAll(
 );
 
 async function deleteProduct(event) {
+  alert("deleting!!!");
+  console.log("deleting!!!");
   const buttonElement = event.target;
   const productId = buttonElement.dataset.productid;
   const csrf = buttonElement.dataset.csrf;
@@ -24,5 +26,6 @@ async function deleteProduct(event) {
 }
 
 for (const deleteProductButtonElement of deleteProductButtonElements) {
+  console.log("del 1");
   deleteProductButtonElement.addEventListener("click", deleteProduct);
 }

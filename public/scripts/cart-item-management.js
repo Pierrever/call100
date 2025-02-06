@@ -27,7 +27,7 @@ async function updateCartItem(event) {
       },
     });
   } catch (error) {
-    alert("Somethingsss went wrong!");
+    alert("Something went wrong!");
     return;
   }
 
