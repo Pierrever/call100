@@ -7,7 +7,7 @@ let database;
 async function connectToDatabase() {
   mongodbUrl=process.env.MONGODB_URI;
   const client = await MongoClient.connect(
-    MONGODB_URI
+    mongodbUrl
   );
   database = client.db();
 }
