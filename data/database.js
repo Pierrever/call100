@@ -5,8 +5,9 @@ const MongoClient = mongodb.MongoClient;
 let database;
 
 async function connectToDatabase() {
+  mongodbUrl=process.env.MONGODB_URI;
   const client = await MongoClient.connect(
-    "mongodb+srv://skapesoves:nevsehocose@cluster0.waukqha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    MONGODB_URI
   );
   database = client.db();
 }
