@@ -5,7 +5,7 @@ const MongoClient = mongodb.MongoClient;
 let database;
 
 async function connectToDatabase() {
-  mongodbUrl=process.env.MONGODB_URI;
+  const mongodbUrl=process.env.MONGODB_URI;
   const client = await MongoClient.connect(
     mongodbUrl
   );
