@@ -17,6 +17,6 @@ form a {
 }
 
 form a:hover,
-a:active {
+a:active  {
   color: var(--color-primary-400, red);
 }
