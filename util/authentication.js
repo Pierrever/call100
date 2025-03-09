@@ -2,7 +2,7 @@ function createUserSession(req, user, action) {
   req.session.uid = user._id.toString();
   console.log({ ...user });
   req.session.isAdmin = user.isAdmin;
-  console.log(req.session.uid + " hulic");
+  console.log(req.session.uid + " login");
   req.session.save(action);
 }
 

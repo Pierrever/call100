@@ -5,9 +5,9 @@ const MongoClient = mongodb.MongoClient;
 let database;
 
 async function connectToDatabase() {
-  const mongodbUrl=process.env.MONGODB_URI;
   const client = await MongoClient.connect(
-    mongodbUrl
+    //napojeni na Mongo Atlas
+    "mongodb+srv://skapesoves:nevsehocose@cluster0.waukqha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   );
   database = client.db();
 }
